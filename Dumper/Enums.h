@@ -40,7 +40,7 @@ inline constexpr EEnumClass operator|(EEnumClass Left, EEnumClass Right)								
 	return (EEnumClass)((std::underlying_type<EEnumClass>::type)(Left) | (std::underlying_type<EEnumClass>::type)(Right));												\
 }																																										\
 																																										\
-inline constexpr EEnumClass& operator|=(EEnumClass& Left, EEnumClass Right)																								\
+inline EEnumClass& operator|=(EEnumClass& Left, EEnumClass Right)																								\
 {																																										\
 	return (EEnumClass&)((std::underlying_type<EEnumClass>::type&)(Left) |= (std::underlying_type<EEnumClass>::type)(Right));											\
 }																																										\
@@ -286,7 +286,7 @@ enum class EClassCastFlags : uint64
 	VRestValueProperty					= 0x0800000000000000,
 };
 
-enum class EClassFlags
+enum class EClassFlags : uint32
 {
 	None						= 0x00000000u,
 	Abstract					= 0x00000001u,

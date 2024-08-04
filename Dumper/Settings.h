@@ -2,7 +2,7 @@
 #include <string>
 
 #include "Enums.h"
-
+#define STRINGIFY(x) #x
 namespace Settings
 {
 	namespace Generator
@@ -11,7 +11,7 @@ namespace Settings
 		inline std::string GameName = "";
 		inline std::string GameVersion = "";
 
-		inline constexpr const char* SDKGenerationPath = "C:/Dumper-7";
+		inline constexpr const char* SDKGenerationPath = "D:/Dump";
 	}
 
 	namespace CppGenerator
@@ -20,7 +20,7 @@ namespace Settings
 		constexpr const char* FilePrefix = "";
 
 		/* No seperate namespace for SDK -> SDKNamespaceName = nullptr */
-		constexpr const char* SDKNamespaceName = "SDK";
+		constexpr const char* SDKNamespaceName = "sdk_" STRINGIFY(GG_TARGET_GAME);
 
 		/* No seperate namespace for Params -> ParamNamespaceName = nullptr */
 		constexpr const char* ParamNamespaceName = "Params";

@@ -1,0 +1,7 @@
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
+file(GLOB_RECURSE SDK_SOURCES "*.cpp" "*.h" "*.hpp" "*.cxx" "*.c")
+add_library(dumper-7 SHARED ${SDK_SOURCES})

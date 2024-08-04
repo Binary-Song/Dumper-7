@@ -801,7 +801,7 @@ void CppGenerator::GenerateEnum(const EnumWrapper& Enum, StreamType& StructFile)
 	for (const EnumCollisionInfo& Info : EnumValueIterator)
 	{
 		NumValues++;
-		MemberString += std::format("\t{:{}} = {},\n", Info.GetUniqueName(), 40, Info.GetValue());
+		MemberString += std::format("\t{:{}} = ({}){},\n", Info.GetUniqueName(), 40, GetEnumUnderlayingType(Enum), Info.GetValue());
 	}
 
 	if (!MemberString.empty()) [[likely]]
@@ -4414,7 +4414,7 @@ inline constexpr EEnumClass operator|(EEnumClass Left, EEnumClass Right)								
 	return (EEnumClass)((std::underlying_type<EEnumClass>::type)(Left) | (std::underlying_type<EEnumClass>::type)(Right));												\
 }																																										\
 																																										\
-inline constexpr EEnumClass& operator|=(EEnumClass& Left, EEnumClass Right)																								\
+inline EEnumClass& operator|=(EEnumClass& Left, EEnumClass Right)																								\
 {																																										\
 	return (EEnumClass&)((std::underlying_type<EEnumClass>::type&)(Left) |= (std::underlying_type<EEnumClass>::type)(Right));											\
 }																																										\
