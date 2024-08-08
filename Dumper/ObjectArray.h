@@ -85,3 +85,55 @@ public:
 
 
 #define InitObjectArrayDecryption(DecryptionLambda) ObjectArray::InitDecryption(DecryptionLambda, #DecryptionLambda)
+
+template<typename UEType>
+inline UEType ObjectArray::GetByIndex(int32 Index)
+{
+	return UEType(ByIndex(GObjects + Off::FUObjectArray::Ptr, Index, SizeOfFUObjectItem, FUObjectItemInitialOffset, NumElementsPerChunk));
+}
+
+template<typename UEType>
+inline UEType ObjectArray::FindObject(std::string FullName, EClassCastFlags RequiredType)
+{
+	for (UEObject Object : ObjectArray())
+	{
+		if (Object.IsA(RequiredType) && Object.GetFullName() == FullName)
+		{
+			return Object.Cast<UEType>();
+		}
+	}
+
+	return UEType();
+}
+
+template<typename UEType>
+inline UEType ObjectArray::FindObjectFast(std::string Name, EClassCastFlags RequiredType)
+{
+	auto ObjArray = ObjectArray();
+
+	for (UEObject Object : ObjArray)
+	{
+		if (Object.IsA(RequiredType) && Object.GetName() == Name)
+		{
+			return Object.Cast<UEType>();
+		}
+	}
+
+	return UEType();
+}
+
+template<typename UEType>
+inline UEType ObjectArray::FindObjectFastInOuter(std::string Name, std::string Outer)
+{
+	auto ObjArray = ObjectArray();
+
+	for (UEObject Object : ObjArray)
+	{
+		if (Object.GetName() == Name && Object.GetOuter().GetName() == Outer)
+		{
+			return Object.Cast<UEType>();
+		}
+	}
+
+	return UEType();
+}

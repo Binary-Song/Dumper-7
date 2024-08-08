@@ -368,58 +368,6 @@ int32 ObjectArray::Num()
 	return *reinterpret_cast<int32*>(GObjects + Off::FUObjectArray::Num);
 }
 
-template<typename UEType>
-static UEType ObjectArray::GetByIndex(int32 Index)
-{
-	return UEType(ByIndex(GObjects + Off::FUObjectArray::Ptr, Index, SizeOfFUObjectItem, FUObjectItemInitialOffset, NumElementsPerChunk));
-}
-
-template<typename UEType>
-UEType ObjectArray::FindObject(std::string FullName, EClassCastFlags RequiredType)
-{
-	for (UEObject Object : ObjectArray())
-	{
-		if (Object.IsA(RequiredType) && Object.GetFullName() == FullName)
-		{
-			return Object.Cast<UEType>();
-		}
-	}
-
-	return UEType();
-}
-
-template<typename UEType>
-UEType ObjectArray::FindObjectFast(std::string Name, EClassCastFlags RequiredType)
-{
-	auto ObjArray = ObjectArray();
-
-	for (UEObject Object : ObjArray)
-	{
-		if (Object.IsA(RequiredType) && Object.GetName() == Name)
-		{
-			return Object.Cast<UEType>();
-		}
-	}
-
-	return UEType();
-}
-
-template<typename UEType>
-static UEType ObjectArray::FindObjectFastInOuter(std::string Name, std::string Outer)
-{
-	auto ObjArray = ObjectArray();
-
-	for (UEObject Object : ObjArray)
-	{
-		if (Object.GetName() == Name && Object.GetOuter().GetName() == Outer)
-		{
-			return Object.Cast<UEType>();
-		}
-	}
-
-	return UEType();
-}
-
 UEClass ObjectArray::FindClass(std::string FullName)
 {
 	return FindObject<UEClass>(FullName, EClassCastFlags::Class);
